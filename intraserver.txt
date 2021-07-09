@@ -2,7 +2,7 @@ Intraserver:
 
 Server messages are represented by blocks in the chain, with associated server being determined via a tripcode block feature.
 In theory, this means anyone can read a server's messages. To prevent communications from being public, symmetric encryption with a server-specific key is used.
-Hence, server read access is enabled through the (private!) sharing of this key. This state, key access, constitutes membership, though it would be the lowest form.
+Hence, server read access is enabled through the (private! foreseeably via DM) sharing of this key. This state, key access, constitutes membership, though it would be the lowest form.
 If this were the only membership mechanism, anyone with a key could create new messages, allowing total anonymity. To create persistent membership, write access
 is stratified through a process of digital signature. At any given time, only a particular set of DSA public keys are permitted by a server.
 Any messages not verifiable with any of those keys will be discarded and left unread. This creates a second class of members, those with the secret and a valid private key, who can send messages as well as read them.
