@@ -1,0 +1,2 @@
+Tripcodes:
+Concord tripcodes are 16-bytes of totally random data represented by a 32-char hexstr.

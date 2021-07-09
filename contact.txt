@@ -4,15 +4,15 @@ Contact:
 and the last block is the server's block with index 0.
 #note: when the contact is "restarted with reversed roles," everything from the READY communications is repeated - the same connection is used.
 
-The client will initiate the request by sending a READY communication.
-The server will reply with READY/k, where k is the number of blocks between client responses.
+The client will initiate the request by sending a READY/[chain] communication, where [chain] is the desired chain's tripcode.
+The server will reply with READY/[k], where [k] is the number of blocks between client responses.
 At this point, the server will begin sending blocks. The blocks will adhere to the following json format:
 {
     "#": block index
-    "b": [date, prevhash, hash, nonce, message, server trip]
+    "b": [date, prevhash, hash, nonce, server trip, content]
 }
 Note the spacially compressed structure (single character indices, array for distinct characteristics).
-After every k block, one of four responses will be sent by the client:
+After every k blocks, one of four responses will be sent by the client:
 PRESENT/T/[first block sent which qualified]
 PRESENT/NT/[first block sent which qualified]
 ABSENT/V

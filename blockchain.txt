@@ -1,0 +1,24 @@
+Blockhain:
+A Concord blockchain is designed to represent a full decentralized messaging service. It's likely that the Concord
+ecosystem will revolve around one large chain. Like any blockchain, the Concord chain's core features
+decentralization and order immutability.
+Each block has six elements: the date, the previous block's hash, the current block's hash, the current block's nonce, the current block's target tripcode, and the current block's contents.
+They adhere to the following formats:
+Date (22 chars): [year]-[month]-[day]T[hour]-[minute]-[second]GMT
+GMT is the Concord standard.
+Previous block's hash (64 chars): hexstr of SHA256 cut to 32 bytes for previous block.
+Current block's hash (64 chars): hexstr of SHA256 cut to 32 bytes for current block.
+Current block's nonce (32 chars): hexstr of 16-byte nonce
+Current block's target tripcode (32 chars): hexstr of 16-byte UUID.
+Current block's contents (arbitrary chars): any string.
+Within a particular block, there are hence 22 + 64 + 64 + 32 + 32 = 214 chars of non-content data.
+Since only content has variable length, any block can be easily split into its components.
+For proof of work, the '0' character is required some n times in the hash hexstr. A Concord chain may have any
+POW threshold.
+So that POW is known and independent chains can be maintained, the first block in a chain should have the following json content:
+{
+    "n": chain name,
+    "c": chain tripcode,
+    "p": POW threshold
+}
+Being as such a block has no predecessor, it should also use 64 '0' characters in place of the previous block's hash.
