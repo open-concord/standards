@@ -2,12 +2,14 @@ A user may declare their persistent self to the block. This is not required for 
 Doing so requires submitting an unencrypted block of this form:
 Declarant trip should be used as server trip.
 {
-    "d": declarant trip code (for validation),
-    "pubk": declarant DSA public key,
-    "sig": hexstr signature for the declaration message,
-    (required for DMs) "rsa_pubk": declarant RSA public key,
-    (optional) "n": declarant user name,
-    (optional) "imgli": declarant profile image link
+    "cont": {
+        "d": declarant trip code (for validation),
+        "pubk": declarant DSA public key,
+        (required for DMs) "rsa_pubk": declarant RSA public key,
+        (optional) "n": declarant user name,
+        (optional) "imgli": declarant profile image link
+    },
+    "sig": signature with the broadcasted pub key for the "cont" section 
 }
 Alternatively, for server-specific identification, a user may make a declaration specifically to a server.
 
