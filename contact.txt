@@ -9,7 +9,7 @@ The server will reply with READY.k, where k is the number of blocks between clie
 At this point, the server will begin sending blocks. The blocks will adhere to the following json format:
 {
     "#": block index
-    "b": [date, prevhash, hash, nonce, message]
+    "b": [date, prevhash, hash, nonce, message, server trip]
 }
 Note the spacially compressed structure (single character indices, array for distinct characteristics).
 After every k block, one of four responses will be sent by the client:

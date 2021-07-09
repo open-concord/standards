@@ -1,0 +1,50 @@
+Intraserver:
+
+Server messages are represented by blocks in the chain, with associated server being determined via a tripcode block feature.
+In theory, this means anyone can read a server's messages. To prevent communications from being public, symmetric encryption with a server-specific key is used.
+Hence, server read access is enabled through the (private!) sharing of this key. This state, key access, constitutes membership, though it would be the lowest form.
+If this were the only membership mechanism, anyone with a key could create new messages, allowing total anonymity. To create persistent membership, write access
+is stratified through a process of digital signature. At any given time, only a particular set of DSA public keys are permitted by a server.
+Any messages not verifiable with any of those keys will be discarded and left unread. This creates a second class of members, those with the secret and a valid private key, who can send messages as well as read them.
+The natural question, though, is of how that set is maintained. To answer that, it's necessary to introduce Concord's message structure.
+Within the actual content of a block, the following json structure is found:
+{
+    "s": sender trip code,
+    "t": message type,
+    "d": message data (json or string, dependent on type)
+}
+Below are the types to be accepted:
+For message ("t"="msg"), data is text.
+For image ("img"), data is base64-encoded content
+For link ("[t]li"), data is link url. [t] is "img" for image embedding, "vid" for video, "gif" for gif, and none for no embedding.
+For write-member addition ("inv"), data is:
+{
+    "nm": new member trip code,
+    "pubk": hexstr pubkey
+}
+For write-member removal ("rem"), data is the same as member addition.
+For role creation or alteration ("crole"), data is:
+{
+    "n": role name,
+    "p": permission int
+}
+For role deletion ("drole"), data is role name.
+For role granting ("grole"), data is grantee trip.
+For settings alteration ("set"), data is:
+{
+    "n": target setting name,
+    "s": target setting... setting
+}
+For server creation ("nserv"), data is:
+{
+    "st": server trip code (for verification),
+    "sk": server key (also for verification),
+    "ct": creator trip code (*also* for verification),
+    "pubk": creator pub key
+}
+Finally, for key change ("ckey") (new key should be used for encryption of the message, of course), data is:
+{
+    "nk": new key (for verification),
+    "ok": old key (so that new key holders can view old messages)
+}
+As you can see, anyone with the server's latest key can view any and all messages, and thereby determine what public keys are accepted at any given time.
