@@ -1,0 +1,5 @@
+All Concord coordinative string transmissions will have the following form:
+"C0NC0RD:[ROLE]:[EXCHANGE TYPE]:[SIGNAL]"
+For example, to initiate a contact communication as client, the following message would be sent:
+"C0NCORD/CLIENT.CONTACT:READY"
+Other communications will be in json, with format attached.
