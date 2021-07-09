@@ -1,25 +1,28 @@
 Contact:
-The client initiates the request by sending a READY communication, which should be reciprocated by the server.
+
+#note: first and last describe order in the transmission process, i.e. the first block is the server's terminal block
+and the last block is the server's block with index 0.
+#note: when the contact is "restarted with reversed roles," everything from the READY communications is repeated - the same connection is used.
+
+The client will initiate the request by sending a READY communication.
+The server will reply with READY.k, where k is the number of blocks between client responses.
 At this point, the server will begin sending blocks. The blocks will adhere to the following json format:
 {
     "#": block index
     "b": [date, prevhash, hash, nonce, message]
 }
 Note the spacially compressed structure (single character indices, array for distinct characteristics).
-After each block, one of four responses will be sent by the client:
-PRESENT/T
-PRESENT/NT
+After every k block, one of four responses will be sent by the client:
+PRESENT/T#[first block sent which qualified]
+PRESENT/NT#[first block sent which qualified]
 ABSENT/V
-ABSENT/NV
+ABSENT/NV#[first block sent which qualified]
 T and NT denote whether a block is terminal or nonterminal in the client's chain.
 V and NV denote whether a block is valid, considering its contents, its hashes, and the block ahead of it.
+ABSENT/V is sent if no other signals qualify. The first non-ABSENT/V block is described in the signal.
 During this process, the client will store each received server block.
 
-#note: first and last below describe the transmission process, i.e. the first block is the server's terminal block
-and the last block is the server's block with index 0.
-#note: when the contact is "restarted with reversed roles," only the READY communications are repeated - the same connection is used.
-
-At any signal other than ABSENT/V or on the last block, the server stops transmitting blocks. Five relevant cases exist:
+At any signal other than ABSENT/V or on the last block, the server stops transmitting blocks and sends a STOP signal. Five relevant cases exist:
 PRESENT/T:
 The server has the same chain preceding that block, and has just transmitted all succeeding blocks. The client is now up-to-date.
 Transmit END and finish the contact.
