@@ -6,7 +6,7 @@ and the last block is the server's block with index 0.
 - When the contact is "restarted with reversed roles," everything from the READY communications is repeated - the same connection is used.
 - This document uses '/' as a detonation between content; the first element is the flag, all subsequent elements will be under CONTENT
 
-**end notes**
+*end notes*
 
 Concord communication follows the JSON standard, communications between clients follows as such;
 ```
