@@ -5,8 +5,9 @@ and the last block is the server's block with index 0.
 #note: when the contact is "restarted with reversed roles," everything from the READY communications is repeated - the same connection is used.
 
 The client will initiate the request by sending a READY/[chain]/[k] communication, where [chain] is the desired chain's tripcode, and [k] is the number of subsequent blocks between client checks.
-At this point, the server will send [k] blocks in an array. The blocks will adhere to the following json format:
-{
+At this point, the server will send [k] blocks in an array. The message will adhere to the following format:
+`BLOCKS/[<blocks>]`
+where each block in <blocks> = {
     "#": block index
     "b": [date, prevhash, hash, nonce, nonce contributor trip, server trip, content]
 }
