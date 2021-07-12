@@ -34,8 +34,8 @@ where each block in `<blocks>` is composed as such;
 *the following section will be sent in this format;*
 ```
 {
-    FLAG: <flag>
-    CONTENT: [<sub_flag>, <conditional_content>]
+    FLAG: <flag>/<subflag>
+    CONTENT: [<conditional_content>]
 }
 ```
 After every <k> blocks, one of four responses following this will be sent by the client:
