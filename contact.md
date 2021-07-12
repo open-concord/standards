@@ -38,7 +38,7 @@ where each block in `<blocks>` is composed as such;
     CONTENT: [<conditional_content>]
 }
 ```
-After every <k> blocks, one of four responses following this will be sent by the client:
+After every `<k>` blocks, one of four responses following this will be sent by the client:
 | FLAG    | SUBFLAG | CONDITIONAL CONTENT                |
 |---------|---------|------------------------------------|
 | PRESENT | T       | `<first block sent which qualified>` |
