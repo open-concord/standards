@@ -16,7 +16,7 @@ Concord communication follows the JSON standard, communications between clients 
 }
 
 ```
-The client will initiate the request by sending a `{FLAG: READY, CONTENT: [<chain>, <k>]}` communication, where <chain> is the desired chain's tripcode, and <k> is the number of subsequent blocks between client checks.
+The client will initiate the request by sending a `{FLAG: READY, CONTENT: [<chain>, <k>]}` communication, where `<chain>` is the desired chain's tripcode, and `<k>` is the number of subsequent blocks between client checks.
 At this point, the server will send `<k>` blocks in an array. The message will adhere to the following format:
 `{FLAG: BLOCKS, CONTENT: [<blocks>]}`
 where each block in `<blocks>` is composed as such;
