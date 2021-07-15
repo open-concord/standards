@@ -50,7 +50,7 @@ After every `<k>` blocks, one of four responses following this will be sent by t
 
 **V** and **NV** denote whether a block is valid, considering its contents, its hashes, and the block ahead of it.
 
-ABSENT/V is sent if no other signals qualify. The first non-ABSENT/V block is described in the signal.
+ABSENT/V is sent if no other signals qualify. The first non-ABSENT/V block is described in the signal, and the index of said block will be included as signal content if such a block exists.
 
 During this process, the client will store each received server block.
 

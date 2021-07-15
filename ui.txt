@@ -22,5 +22,5 @@ Meanwhile, a response will be of the form below:
     "p": whether or not this data was requested (0 or 1)
 }
 #note: in the array of decrypted messages, each one has the "sig": 0 or 1 feature, describing whether verification was successful.
-Whenever new messages are received by the core while such a connection is open, json in
+#note: Whenever new messages are received by the core while such a connection is open, json in
 the response format will be sent containing said messages with p: 0.
