@@ -4,6 +4,7 @@ Usually, this controller will take the form of a UI application running a socket
 Broadly speaking, there are two classes of requests that a UI can make:
 - Additions (a)
 - Queries (q)
+
 These are "a" and "q" in the "t" (type) field of the json request.
 The "u" type, for user account, is distinguished, though it would be considered a query. 
 "q" is reserved for message retrieval.
