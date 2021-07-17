@@ -8,8 +8,6 @@ Broadly speaking, there are four classes of requests that a UI can make:
 - Keygen (g)
 
 These are "a", "q", and "k" in the "t" (type) field of the json request.
-The "u" type, for user account, is distinguished, though it would be considered a query
-by most. "q" is reserved for message retrieval.
 
 For any request, the following features are needed:
 ```
