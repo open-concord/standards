@@ -12,7 +12,7 @@ These are "a", "q", "c", and "g" in the "t" (type) field of the json request.
 For any request, the following features are needed:
 ```
 {
-    "t": type ("a", "q", or "c"),
+    "t": type ("a", "q", "c", or "g"),
     "u": identity tripcode,
     "s": target server/DM tripcode
 }
