@@ -93,5 +93,7 @@ For keygen:
 }
 ```
 *#note: for "kt": "AES", both pub and pri are the same symmetric key.*
+
 *#note: in the array of decrypted messages, each one has the "sig": 0 or 1 feature, describing whether verification was successful.*
+
 *#note: Whenever new messages are received by the core while such a connection is open, json in the response format will be sent containing said messages with p: 0.*
