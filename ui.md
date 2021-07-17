@@ -7,7 +7,7 @@ Broadly speaking, there are four classes of requests that a UI can make:
 - Data changes (c)
 - Keygen (g)
 
-These are "a", "q", and "k" in the "t" (type) field of the json request.
+These are "a", "q", "c", and "g" in the "t" (type) field of the json request.
 
 For any request, the following features are needed:
 ```
