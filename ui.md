@@ -32,11 +32,18 @@ For additions, we need content as well.
     "c": (json) content, in format described by the relevant of intraserver.txt or declaration.txt
 }
 ```
-For queries, on the other hand, we need a range of messages to retrieve, and server config changes must be singled out:
+For queries, on the other hand, we need a range of messages to retrieve;
 ```
 {
-    "cfg": 0 or 1,
-    "r": range of messages, backward from blockchain end - [start, end]
+    [string] "l": <optional> hash of last block in record (to allow for UI message caching)
+    [int] "i": <conditional: l> amount of messages from 'l' (-1 signifies to end of chain)
+    "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
+}
+```
+Server config changes must be singled out:
+```
+{
+    [bool] "cfg": 0 or 1 (will return all instances of server config, in order)
 }
 ```
 For changes to user data, a number of fields are available (all fields are optional)
