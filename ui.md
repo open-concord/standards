@@ -63,6 +63,9 @@ For keygen, simply key type suffices (in fact, only this is required):
     "kt": key type ("RSA", "DSA", or "AES")
 }
 ```
+
+----
+
 Meanwhile, a response to any request will be of the form below:
 ```
 {
