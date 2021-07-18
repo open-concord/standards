@@ -13,6 +13,7 @@ For any request, the following features are needed:
 ```
 {
     "t": type ("a", "q", "c", or "g"),
+    "ch": target chain tripcode,
     "u": identity tripcode,
     "s": target server/DM tripcode
 }
@@ -31,16 +32,16 @@ For additions, we need content as well.
     "c": (json) content, in format described by the relevant of intraserver.txt or declaration.txt
 }
 ```
-For queries, on the other hand, we need a range of messages to retrieve:
+For queries, on the other hand, we need a range of messages to retrieve, and server config changes must be singled out:
 ```
 {
+    "cfg": 0 or 1,
     "r": range of messages, backward from blockchain end - [start, end]
 }
 ```
 For changes to user data, a number of fields are available (all fields are optional)
 ```
 {
-    "targets": [array of fields from those below to be changed],
     "servkeys": [array of {
         "s": server tripcode,
         "k": new key
@@ -59,6 +60,7 @@ Meanwhile, a response to any request will be of the form below:
 ```
 {
     "err": code for error,
+    "t": response type (same as request type),
     "c": type-dependent content,
     "p": whether or not this data was requested (0 or 1)
 }
@@ -90,6 +92,21 @@ For keygen:
     }
 }
 ```
+Beyond request types, some types only exist in responses, as they describe events that are not sought out by the UI.<sup>*</sup>:
+
+"nc", representing the addition of a new chain in cores allowing them.
+```
+{
+    "c": {
+        "ch": new chain tripcode
+    }
+}
+```
+
+<sup>*</sup>Only one currently.
+
+*#note: the initial contact should involve core sharing a list of available chains*
+
 *#note: for "kt": "AES", both pub and pri are the same symmetric key.*
 
 *#note: in the array of decrypted messages, each one has the "sig": 0 or 1 feature, describing whether verification was successful.*
