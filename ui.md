@@ -40,10 +40,10 @@ For queries, on the other hand, we need a range of messages to retrieve;
     "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
 }
 ```
-We also need to discriminate by query type:
+We also need to discriminate by intraserver message type:
 ```
 {
-    [string] "qt": "p" for plain messages, "m" for members, "r" for roles, "s" for settings 
+    [string] "imt": "p" for plain messages, "m" for member changes, "r" for role changes, "s" for settings changes 
 }
 ```
 For changes to user data, a number of fields are available (all fields are optional)
