@@ -10,6 +10,7 @@ The natural question, though, is of how that set is maintained. To answer that, 
 Within the actual content of a block, the following json structure is found:
 {
     "s": sender trip code,
+    "ts": message timestamp (same format as blockchain.txt),
     "t": message type,
     "d": message data (json or string, dependent on type)
 }
