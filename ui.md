@@ -40,10 +40,10 @@ For queries, on the other hand, we need a range of messages to retrieve;
     "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
 }
 ```
-We also need to discriminate by intraserver message type:
+We also need to discriminate by message type with queries:
 ```
 {
-    [bool] "ismt": see intraserver.txt
+    [bool] "cfg": 0 or 1 (will return all instances of server config, in order)
 }
 ```
 For changes to user data, a number of fields are available (all fields are optional)
