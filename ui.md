@@ -40,10 +40,10 @@ For queries, on the other hand, we need a range of messages to retrieve;
     "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
 }
 ```
-We also need to discriminate by message type with queries:
+We also need to discriminate by query type:
 ```
 {
-    [bool] "cfg": 0 or 1 (will return all instances of server config, in order)
+    [string] "qt": "p" for plain messages, "m" for members, "r" for roles, "s" for settings 
 }
 ```
 For changes to user data, a number of fields are available (all fields are optional)

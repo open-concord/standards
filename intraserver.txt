@@ -40,7 +40,7 @@ For server creation ("nserv"), data is:
 {
     "st": server trip code (for verification),
     "sk": server key (also for verification),
-    "ct": creator trip code (*also* for verification),
+    "nm": creator trip code (*also* for verification),
     "pubk": creator pub key
 }
 Finally, for key change ("ckey") (new key should be used for encryption of the message, of course), data is:
