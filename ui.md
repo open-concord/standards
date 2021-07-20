@@ -23,7 +23,7 @@ In **addition** to these features, each type has separate arguments.
 Both additions and queries need a message type to add or retrieve, and hence:
 ```
 {
-    "mt": message type ("s" for server, "dm" for DM, "dec" for declaration)
+    "mt": message type ("s" for server, "p" for PM (DM), "d" for declaration)
 }
 ```
 For additions, we need content as well. 
