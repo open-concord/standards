@@ -72,7 +72,6 @@ Meanwhile, a response to any request will be of the form below:
     "err": code for error,
     "t": response type (same as request type),
     "c": type-dependent content,
-    "p": whether or not this data was requested (0 or 1)
 }
 ```
 For additions and data changes:
@@ -102,13 +101,23 @@ For keygen:
     }
 }
 ```
-Beyond request types, some types only exist in responses, as they describe events that are not sought out by the UI.<sup>*</sup>:
+Some events will be sent as responses without a request, notifying the controller:<sup>*</sup>:
 
 "nc", representing the addition of a new chain in cores allowing them.
 ```
 {
     "c": {
         "ch": new chain tripcode
+    }
+}
+```
+
+"nb", representing the addition of new blocks to a chain
+```
+{
+    "c": {
+        "ch": chain tripcode,
+        "bc": block count
     }
 }
 ```
