@@ -63,6 +63,18 @@ For keygen, simply key type suffices (in fact, only this is required):
     "kt": key type ("RSA", "DSA", or "AES")
 }
 ```
+For convenience, AES encryption/decryption can also be requested. The **full** format for such, with no other fields needed, is below:
+```
+{
+    "t": "e",
+    "aes_key": AES key, as generated with keygen,
+    "direction": 0 for encryption, 1 for decryption,
+    "plain": plaintext (if encrypting),
+    "nonce": nonce (if decrypting),
+    "cipher": ciphertext (if decrypting)
+}
+```
+Responses for this utility are in the standard, with the "c" field in the same "plain"-"nonce"-"cipher" format.
 
 ----
 
@@ -101,7 +113,7 @@ For keygen:
     }
 }
 ```
-Some events will be sent as responses without a request, notifying the controller:<sup>*</sup>:
+Some events will be sent as responses without a request, notifying the controller:
 
 "nc", representing the addition of a new chain in cores allowing them.
 ```
@@ -121,8 +133,6 @@ Some events will be sent as responses without a request, notifying the controlle
     }
 }
 ```
-
-<sup>*</sup>Only one currently.
 
 *#note: the initial contact should involve core sharing a list of available chains*
 
