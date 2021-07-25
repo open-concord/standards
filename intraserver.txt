@@ -21,7 +21,7 @@ For link ("[t]li"), data is link url. [t] is "img" for image embedding, "vid" fo
 For write-member addition ("inv"), data is:
 {
     "nm": new member trip code,
-    keys: {
+    "keys": {
         "sig_pubk": DSA pubkey,
         "enc_pubk": RSA pubkey
     }
@@ -43,7 +43,10 @@ For server creation ("nserv"), data is:
     "st": server trip code (for verification),
     "sk": server key (also for verification),
     "nm": creator trip code (*also* for verification),
-    "pubk": creator pub key
+    "keys": {
+        "sig_pubk": DSA pubkey,
+        "enc_pubk": RSA pubkey
+    }
 }
 For write-member removal ("rem"), data is:
 {

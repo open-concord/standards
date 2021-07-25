@@ -4,8 +4,10 @@ Declarant trip should be used as server trip.
 {
     "cont": "{
         "d": declarant trip code (for validation),
-        "pubk": declarant DSA public key,
-        (required for DMs) "rsa_pubk": declarant RSA public key,
+        "keys": {
+            "sig_pubk": DSA pubkey,
+            "enc_pubk": RSA pubkey
+        },
         (optional) "n": declarant user name,
         (optional) "imgli": declarant profile image link
     }",
