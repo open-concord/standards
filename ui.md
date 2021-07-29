@@ -4,32 +4,42 @@ Usually, this controller will take the form of a UI application running a socket
 Broadly speaking, there are four classes of requests that a UI can make:
 - Additions (a)
 - Queries (q)
-- Data changes (c)
-- Keygen (g)
+- User Additions (u)
+- User Modification (m)
+- Misc. Utilities (t)
 
-These are "a", "q", "c", and "g" in the "t" (type) field of the json request.
+These are "a", "q", "u", "m", and "t" in the "t" (type) field of the json request.
 
-For any request, the following features are needed:
 ```
 {
-    "t": type ("a", "q", "c", or "g"),
-    "ch": target chain tripcode,
-    "u": identity tripcode,
-    "s": target server/DM tripcode
+    [char] "t": request type
 }
 ```
+
+For an addition or query, the following features are needed:
+
+```
+{
+    [string] "ch": target chain tripcode,
+    [string] "u": identity tripcode,
+    [string] "s": target server/DM tripcode
+}
+```
+
 As you can see, one controller can take on multiple "user" identities (i.e. tripcodes), with separate sig keys and servers.
+
 In **addition** to these features, each type has separate arguments.
+
 Both additions and queries need a message type to add or retrieve, and hence:
 ```
 {
-    "mt": message type ("s" for server, "p" for PM (DM), "d" for declaration)
+    [char] "mt": message type ("s" for server, "p" for PM (DM), "d" for declaration)
 }
 ```
 For additions, we need content as well. 
 ```
 {
-    "c": (json) content, in format described by the relevant of intraserver.txt or declaration.txt
+    [string || object] "c": (json) content, in format described by the relevant of intraserver.txt or declaration.txt
 }
 ```
 For queries, on the other hand, we need a range of messages to retrieve;
@@ -37,36 +47,49 @@ For queries, on the other hand, we need a range of messages to retrieve;
 {
     [string] "l": <optional> hash of last block in record (to allow for UI message caching)
     [int] "i": <conditional: l> amount of messages from 'l' (-1 signifies to end of chain)
-    "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
+    [int[2]] "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
 }
 ```
-We also need to discriminate by intraserver message type:
+
+We also need to discriminate by intraserver message type in queries:
+
 ```
 {
-    [string] "imt": "p" for plain messages, "m" for member changes, "r" for role changes, "s" for settings changes 
+    [char] "imt": "p" for plain messages, "m" for member changes, "r" for role changes, "s" for settings changes 
 }
 ```
-For changes to user data, a number of fields are available (all fields are optional)
+For user addition, no data is needed if the user is to be generated. However, if the user is to be set, the following is required:
+
 ```
 {
-    "servkeys": [array of {
-        "s": server tripcode,
-        "k": new key
-    }],
-    "sigkey": new DSA private key,
-    "enckey": new RSA private key
+    [object] "pub_keys": {
+        [string] "sig_pubk": DSA public key,
+        [string] "enc_pubk": RSA public key
+    },
+    [object] "pri_keys": {
+        [string] "sig_prik": DSA private key,
+        [string] "enc_prik": RSA private key
+    }
 }
 ```
-For keygen, simply key type suffices (in fact, only this is required):
+
+User modification just covers the addition of server AES keys, so it has the following data:
+
 ```
 {
-    "kt": key type ("RSA", "DSA", or "AES")
-}
+    [object] "serv_keys": {
+        Map: server tripcode -> server AES key
+    }
+} 
 ```
-For convenience, AES encryption/decryption can also be requested. The **full** format for such, with no other fields needed, is below:
+
+Misc. Utilities have only a single necessary field, Utility Type (ut).
+
+AES encryption/decryption can be requested:
+
 ```
 {
-    "t": "e",
+    "ut": "e",
     "aes_key": AES key, as generated with keygen,
     "direction": 0 for encryption, 1 for decryption,
     "plain": plaintext (if encrypting),
@@ -74,45 +97,75 @@ For convenience, AES encryption/decryption can also be requested. The **full** f
     "cipher": ciphertext (if decrypting)
 }
 ```
-Responses for this utility are in the standard, with the "c" field in the same "plain"-"nonce"-"cipher" format.
+
+Keygen of any type can also be requested:
+
+```
+{
+    "ut": "k",
+    "kt": key type (AES, DSA, or RSA)
+}
+```
+
 
 ----
 
 Meanwhile, a response to any request will be of the form below:
+
 ```
 {
-    "err": code for error,
-    "t": response type (same as request type),
-    "c": type-dependent content,
+    [string] "err": code for error,
+    [char] "t": response type (same as request type),
+    [object] "c": type-dependent content
 }
 ```
-For additions and data changes:
+
+For additions, user addition with defined keys, and user modification:
+
 ```
 {
     "c": {
-        "success": 0 or 1
+        [int] "success": 0 or 1
     }
 }
 ```
+
 For queries:
+
 ```
 {
-    "c": {
-        "m": [array of decrypted message jsons],
-        "rr": real range retrieved - [start, end]
+    [object] "c": {
+        [object[]] "m": [array of decrypted message jsons],
+        [int[2]] "rr": real range retrieved - [start, end]
     }
 }
 ```
+
+For user addition with undefined keys, the "c" field just contains the fields that were not set (i.e. "pub_keys" and "pri_keys"), with the addition of a user tripcode generated from the pub keys:
+```
+{
+    [object] "c": {
+        [object] "pub_keys": ...,
+        [object] "pri_keys": ...,
+        [string] "u": generated user tripcode
+    }
+}
+```
+
+For AES encryption, responses are in the same standard as requests, with the "c" field in the same "plain"-"nonce"-"cipher" format. E.g. encryption yields nonce and cipher in the "c" field.
+
 For keygen:
+
 ```
 {
     "c": {
         "pub": generated public key,
         "pri": generated private key,
-        "kt": returned key type
+        "kt": key type (from the request)
     }
 }
 ```
+
 Some events will be sent as responses without a request, notifying the controller:
 
 "nc", representing the addition of a new chain in cores allowing them.
