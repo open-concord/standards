@@ -3,10 +3,10 @@ Usually, this controller will take the form of a UI application running a socket
 
 Broadly speaking, there are four classes of requests that a UI can make:
 - [Additions](#add) (a)
-- Queries (q)
-- User Additions (u)
-- User Modification (m)
-- Misc. Utilities (t)
+- [Queries](#query) (q)
+- [Identity Additions](#id_add) (u)
+- [Identity Modification](#id_mod) (m)
+- [Misc. Utilities](#misc) (t)
 
 These are "a", "q", "u", "m", and "t" in the "t" (type) field of the json request.
 
@@ -58,7 +58,7 @@ We also need to discriminate by intraserver message type in queries:
     [char] "imt": "p" for plain messages, "m" for member changes, "r" for role changes, "s" for settings changes 
 }
 ```
-For user addition, no data is needed if the user is to be generated. However, if the user is to be set, the following is required:
+For identity addition, no data is needed if the user is to be generated. However, if the user is to be set, the following is required:
 
 ```
 {
@@ -73,7 +73,7 @@ For user addition, no data is needed if the user is to be generated. However, if
 }
 ```
 
-User modification just covers the addition of server AES keys, so it has the following data:
+Identity modification just covers the addition of server AES keys, so it has the following data:
 
 ```
 {
@@ -200,10 +200,16 @@ Some events will be sent as responses without a request, notifying the controlle
 
 
 ---
-###Direct Reference
+### Direct Reference
 
 <a name="add">**Addition**</a>
-
+<table>
+<tr>
+<td> Input </td>
+</tr>
+<tr>
+<td>
+    
 ```
 {
     [char] "t": "a", // request type
@@ -213,4 +219,29 @@ Some events will be sent as responses without a request, notifying the controlle
     [char] "mt": <message type> // "s" for server, "p" for PM (DM), "d" for declaration,
     [string || JSON object] "c": <content> // in format described by the relevant of intraserver.txt or declaration.txt
 }
+```
+    
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td> Return </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+    [string] "err": code for error,
+    [char] "t": response type (same as request type),
+    [object] "c": {
+        [int] "success": <0 or 1> // treat as a bool
+    }
+}
 ``` 
+
+</td>
+</tr>
+</table>
