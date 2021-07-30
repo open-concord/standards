@@ -2,7 +2,7 @@ The core application connects to a configurable local port for a controller conn
 Usually, this controller will take the form of a UI application running a socket server.
 
 Broadly speaking, there are four classes of requests that a UI can make:
-- Additions (a)
+- [Additions](#add) (a)
 - Queries (q)
 - User Additions (u)
 - User Modification (m)
@@ -152,6 +152,8 @@ For user addition with undefined keys, the "c" field just contains the fields th
 }
 ```
 
+
+
 For AES encryption, responses are in the same standard as requests, with the "c" field in the same "plain"-"nonce"-"cipher" format. E.g. encryption yields nonce and cipher in the "c" field.
 
 For keygen:
@@ -194,3 +196,21 @@ Some events will be sent as responses without a request, notifying the controlle
 *#note: in the array of decrypted messages, each one has the "sig": 0 or 1 feature, describing whether verification was successful.*
 
 *#note: Whenever new messages are received by the core while such a connection is open, json in the response format will be sent containing said messages with p: 0.*
+
+
+
+---
+###Direct Reference
+
+<a name="add">**Addition**</a>
+
+```
+{
+    [char] "t": "a", // request type
+    [string] "ch": <target chain tripcode>,
+    [string] "u": <identity tripcode>,
+    [string] "s": <target->server/DM tripcode>,
+    [char] "mt": <message type> // "s" for server, "p" for PM (DM), "d" for declaration,
+    [string || JSON object] "c": <content> // in format described by the relevant of intraserver.txt or declaration.txt
+}
+``` 
