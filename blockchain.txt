@@ -12,7 +12,7 @@ Current block's nonce (32 chars): b64 of 16-byte nonce
 Nonce contributor's tripcode (24 chars): b64 of 16-byte tripcode.
 Current block's target tripcode (24 chars): b64 of 16-byte tripcode.
 Current block's contents (arbitrary chars): any string.
-Within a particular block, there are hence 22 + 64 + 64 + 24 + 24 + 24 = 222 chars of non-content data.
+Within a particular block, there are hence 22 + 64 + 64 + 32 + 24 + 24 = 230 chars of non-content data.
 Since only content has variable length, any block can be easily split into its components.
 For proof of work, the '0' character is required some n times in the hash hexstr. A Concord chain may have any
 POW threshold.
