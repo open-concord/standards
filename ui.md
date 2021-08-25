@@ -2,11 +2,11 @@ The core application connects to a configurable local port for a controller conn
 Usually, this controller will take the form of a UI application running a socket server.
 
 Broadly speaking, there are four classes of requests that a UI can make:
-- Additions (a)
-- Queries (q)
-- User Additions (u)
-- User Modification (m)
-- Misc. Utilities (t)
+- [Additions](#add) (a)
+- [Queries](#query) (q)
+- [Identity Additions](#id_add) (u)
+- [Identity Modification](#id_mod) (m)
+- [Misc. Utilities](#misc) (t)
 
 These are "a", "q", "u", "m", and "t" in the "t" (type) field of the json request.
 
@@ -58,7 +58,7 @@ We also need to discriminate by intraserver message type in queries:
     [char] "imt": "p" for plain messages, "m" for member changes, "r" for role changes, "s" for settings changes 
 }
 ```
-For user addition, no data is needed if the user is to be generated. However, if the user is to be set, the following is required:
+For identity addition, no data is needed if the user is to be generated. However, if the user is to be set, the following is required:
 
 ```
 {
@@ -73,7 +73,7 @@ For user addition, no data is needed if the user is to be generated. However, if
 }
 ```
 
-User modification just covers the addition of server AES keys, so it has the following data:
+Identity modification just covers the addition of server AES keys, so it has the following data:
 
 ```
 {
@@ -152,6 +152,8 @@ For user addition with undefined keys, the "c" field just contains the fields th
 }
 ```
 
+
+
 For AES encryption, responses are in the same standard as requests, with the "c" field in the same "plain"-"nonce"-"cipher" format. E.g. encryption yields nonce and cipher in the "c" field.
 
 For keygen:
@@ -194,3 +196,52 @@ Some events will be sent as responses without a request, notifying the controlle
 *#note: in the array of decrypted messages, each one has the "sig": 0 or 1 feature, describing whether verification was successful.*
 
 *#note: Whenever new messages are received by the core while such a connection is open, json in the response format will be sent containing said messages with p: 0.*
+
+
+
+---
+### Direct Reference
+
+<a name="add">**Addition**</a>
+<table>
+<tr>
+<td> Input </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+    [char] "t": "a", // request type
+    [string] "ch": <target chain tripcode>,
+    [string] "u": <identity tripcode>,
+    [string] "s": <target->server/DM tripcode>,
+    [char] "mt": <message type> // "s" for server, "p" for PM (DM), "d" for declaration,
+    [string || JSON object] "c": <content> // in format described by the relevant of intraserver.txt or declaration.txt
+}
+```
+    
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td> Return </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+    [string] "err": code for error,
+    [char] "t": response type (same as request type),
+    [object] "c": {
+        [int] "success": <0 or 1> // treat as a bool
+    }
+}
+``` 
+
+</td>
+</tr>
+</table>
