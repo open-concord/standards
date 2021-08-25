@@ -1,0 +1,74 @@
+Intraserver
+
+Once decrypted, Concord messages can be interpreted in any agreed-upon way.
+Included in the core framework is a standard for controlling specifically the
+access management elements of a chat server. Below, CLAF (the Concord Limited Access Format):
+
+Any message will have the following characteristics:
+
+{
+    a: author tripcode,
+    s: server tripcode,
+    ts: timestamp (b64),
+    st: message supertype,
+    d: message data
+}
+
+Four supertypes exist:
+- "c", for independent content (messages, links, images, etc; see cmark.txt)
+- "a", for access-affecting content; this section includes successor server creation, member additions, and such.
+- "r", for permissions-affecting content (expressed in terms of named roles)
+- "s", for settings-affecting content (not connected to chain interpretation, but strung together into one settings object)
+Of course, independent content can have any data.
+However, for the other four supertypes, a fixed set of actions can be invoked.
+In these cases, a "t" feature describing type will exist, and data will be prescribed by that type.
+---
+Access
+-----
+t: "invite" - invite one or more users to the server
+d: {
+    nms: [for each member, {
+        enc_pubk: RSA public key,
+        sig_pubk: DSA public key
+    }]
+}
+#note: hash sig_pubk+enc_pubk to get member trip
+t: "rem" - forward to a new server lacking one or more users
+d: {
+    rms: [removed member tripcodes],
+    nsk: {
+        (preserved) member trip: RSA-encrypted AES key for new server
+    }
+}
+#note: hash decrypted AES key to get new server trip.
+---
+Permissions
+----
+Permissions are expressed as a single b64 char, encoding 6 bits, alongside an integer expressing role power.
+0 - Is muted
+1 - Can invite
+2 - Can remove less powerful users (user power = max role power)
+3 - Can grant/remove less powerful roles
+4 - Can create less powerful roles
+5 - Can edit settings
+t: "crole" - create a role
+d: {
+    rn: role name (should be unique),
+    rp: role power,
+    pc: permissions char
+}
+t: "grole" - grant a role
+d: {
+    tu: target user trip,
+    tr: target role name
+}
+t: "rrole - remove a role
+d: symmetric with "grole" (same args)
+---
+Settings
+----
+No settings types exist, so only the supertype is needed.
+d: {
+    sn: setting name,
+    sv: setting value (JSON)
+}
