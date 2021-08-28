@@ -8,12 +8,14 @@ Any message will have the following characteristics:
 
 {
     a: author tripcode,
-    s: server tripcode,
-    ts: timestamp (b64),
+    h: hash of timestamp + server tripcode + for each parent block, that block's hash
     st: message supertype,
     d: message data
 }
-
+#note: the point of including a hash is to "sign" the content's full context.
+# you can spoof a new copy of a signed message, which might have a different meaning when sent at a different position.
+# however, if two blocks have exactly the same particulars (INCLUDING parent blocks, timestamps, all content, and server trip)
+# they're identical (and will even have the same block hash)
 Four supertypes exist:
 - "c", for independent content (messages, links, images, etc; see cmark.txt)
 - "a", for access-affecting content; this section includes successor server creation, member additions, and such.
@@ -74,7 +76,7 @@ d: {
     sn: [setting indices],
     sv: setting value (JSON)
 }
-\
+
 However, Concord is not a linear format, and consequently neither is CLAF.
 This is not terribly disruptive when it comes to independent content messages - aside from the occasional branching when messages are sent simultaneously - but,
 in server administration (the other three types), it makes a massive difference. If a user uses a role permission at the same time as that permission is revoked, what happens?
