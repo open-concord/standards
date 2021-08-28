@@ -84,5 +84,5 @@ For most cases, CLAF relies on a simple procedure:
 3. "rem" messages are special in the following ways:
    i. They're powerful and permissions associated with them should be granted with caution (they create new servers!)
    ii. They're adhered to by everyone whenever permitted within their own branch (i.e. they prevent merging, even merging that could cancel them)
-   iii. They kill all server messages they don't rely on them (not a problem usually; this is done to prevent server activity post-rem)
+   iii. They kill all server messages that don't rely on them (not a problem usually; this is done to prevent server activity post-rem)
 As long as branches are quickly resolved in the end, this allows users to act without infringing on the operational integrity of the server.
