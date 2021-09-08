@@ -27,6 +27,15 @@ In these cases, a "t" feature describing type will exist, and data will be presc
 ---
 Access
 -----
+t: "nserv" - create a new server (will be ignored if not first message)
+d: {
+    cms: {
+        enc_pubk: RSA public key,
+        sig_pubk: DSA public key
+        (both for server creator)
+    }
+    prev_key: predecessor server AES key (if applicable)
+}
 t: "invite" - invite one or more users to the server
 d: {
     nms: [for each member, {
