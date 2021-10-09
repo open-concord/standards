@@ -48,6 +48,7 @@ t: "rem" - forward to a new server lacking one or more users
 d: {
     rms: [removed member tripcodes],
     nst: new server trip,
+    archive: [head block hashes, not including this one or its parents],
     nsk: {
         (preserved) member trip: RSA-encrypted AES key for new server
     }
@@ -67,7 +68,7 @@ Permissions are expressed as a single b64 char, encoding 6 bits, alongside an in
 t: "crole" - create a role
 d: {
     rn: role name (should be unique),
-    rp: role power,
+    rp: role primacy,
     pc: permissions char
 }
 t: "grole" - grant a role
@@ -80,10 +81,15 @@ d: symmetric with "grole" (same args)
 ---
 Settings
 ----
-No settings types exist, so only the supertype is needed.
+t: "sset" - set settings
 d: {
-    sn: [setting indices],
-    sv: setting value (JSON)
+    sn: [[setting keys]],
+    po: [bool - parse objects, defaults to true],
+    sv: [setting values (JSON)]
+}
+t: "cset" - clear settings
+d: {
+    sn: [[settings keys]]
 }
 
 However, Concord is not a linear format, and consequently neither is CLAF.
