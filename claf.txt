@@ -56,7 +56,7 @@ d: {
 ---
 Permissions
 ----
-Permissions are expressed as a single b64 char, encoding 6 bits, alongside an integer expressing role power.
+Permissions are expressed as a single integer, encoding 6 bits, alongside a second integer expressing role power.
 0 - Is muted
 1 - Can invite
 2 - Can remove less powerful users (user power = max role power)
