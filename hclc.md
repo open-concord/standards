@@ -1,4 +1,4 @@
-## 
+# FC and HCLC standards
 
 Concord node-level communication adheres to FC (Flag-Content) standard - messages are sent in the following format:
 ```
