@@ -1,4 +1,4 @@
-# CLAF standard
+# CLAF
 
 ## Basic structure
 

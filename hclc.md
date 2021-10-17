@@ -1,15 +1,8 @@
-# FC and HCLC standards
+# HCLC
 
-Concord node-level communication adheres to FC (Flag-Content) standard - messages are sent in the following format:
-```
-{
-    FLAG: <flag>,
-    CONTENT: <content>
-}
+The main purpose of node communication is to facilitate merging, for which the HCLC (Host-Client Layer Comparison) protocol is used. HCLC uses the FC format.
 
-```
-The main purpose of node communication is to facilitate merging, for which the HCLC (Host-Client Layer Comparison) protocol is used. Its specification is below:
-The client will initiate the request by sending a `{FLAG: READY, CONTENT: {chain: <chain>, k: <k>}}` communication, where `<chain>` is the desired chain's tripcode, and `<k>` is the number of subsequent layers between client checks (more on what that means in a moment).
+To begin an HCLC interaction, a node (referred to as the client) will initiate by sending a `{FLAG: READY, CONTENT: {chain: <chain>, k: <k>}}` communication, where `<chain>` is the desired chain's tripcode, and `<k>` is the number of subsequent layers between client checks (more on what that means in a moment). The recipient will be referred to as the host.
 
 ----
 
@@ -32,23 +25,23 @@ This is because all blocks in higher layers will be predecessors of the blocks i
 in it. Similarly, though this is incidental, this trivially demonstrates that the layer structure above the compared layers will be the same.
 This property is convenient because it allows the merge process to be halted as soon as possible - when the client receives a layer that's identical to its own, it can begin end procedures. Here's an example of the process in more detail, using this principle:
 
- ```The host retrieves its chain's first through kth layers and sends their hashes under HBLOCKS.```
+ ```Host: retrieves its chain's first through kth layers and sends their hashes under HBLOCKS.```
 
- ```The client retrieves its chain's first through kth and compares. Any blocks it has are sent to the server, and so are requests for any hashes it lacks, both under CBLOCKS.```
+ ```Client: retrieves its chain's first through kth and compares. Any blocks it has are sent to the server, and so are requests for any hashes it lacks, both under CBLOCKS.```
  
- ```The host retrieves its chain's second through (k+1)th layers and sends their hashes. It adds any blocks that the client sent to its chain, and sends the blocks it requested to the client. All under HBLOCK```
+ ```Host: retrieves its chain's second through (k+1)th layers and sends their hashes. It adds any blocks that the client sent to its chain, and sends the blocks it requested to the client. All under HBLOCK```
 
 ...
 
- ```The client retrieves its chain's nth through (n+k-1)th layer and compares. Any blocks it has are sent to the server, and so are requests for any hashes it lacks, both under CBLOCKS. It adds any blocks it received based on previous requests to its chain.```
+ ```Client: retrieves its chain's nth through (n+k-1)th layers and compares. Any blocks it has are sent to the server, and so are requests for any hashes it lacks, both under CBLOCKS. It adds any blocks it received based on previous requests to its chain.```
 
- ```The host retrieves its chain's (n+1)th through (n+k)th layers and sends their hashes. It adds any blocks that the client sent to its chain, and sends the blocks it requested to the client. All under HBLOCK.```
+ ```Host: retrieves its chain's (n+1)th through (n+k)th layers and sends their hashes. It adds any blocks that the client sent to its chain, and sends the blocks it requested to the client. All under HBLOCK.```
 
- ```The client retrieves its chain's (n+1)th through (n+k)th layers and compares. Any blocks it has are sent to the server, and so are requests for any hashes it lacks. It adds any blocks it received based on previous requests to its chain. While analyzing the layers, the client finds that one pair is identical, so it stops there and uses the CEND flag in the transmission.```
+ ```Client: retrieves its chain's (n+1)th through (n+k)th layers and compares. Any blocks it has are sent to the server, and so are requests for any hashes it lacks. It adds any blocks it received based on previous requests to its chain. While analyzing the layers, the client finds that one pair is identical, so it stops there and uses the CEND flag in the transmission.```
 
- ```The host adds any blocks received to its chain and sends the blocks requested under HEND.```
+ ```Host: adds any blocks received to its chain and sends the blocks requested under HEND.```
 
- ```The client adds any blocks received to its chain. The chains are now merged.```
+ ```Client: adds any blocks received to its chain. The chains are now merged.```
 
 As you can see, the use of layers allows it to be easily recognized when the chains are fully merged. 
 Also for the purpose of efficiency, the sending only of block hashes over the full layer - with block contents being sent when they're observed missing (host's chain) or reported as such (client's chain) - ensures that only full contents which are absent on one side will be transmitted.
