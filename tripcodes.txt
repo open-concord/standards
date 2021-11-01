@@ -1,5 +1,0 @@
-Tripcodes:
-Concord has two categories of tripcodes, both 24 base64 chars representing 16 bytes:
-- User trips, created by hashing DSA pubkey + RSA pubkey (in that order)
-- Server trips, created by hashing server AES key
-In both cases, they're used to give continuity to their corresponding entities.
