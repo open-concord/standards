@@ -1,11 +1,11 @@
 # FC
 
-The FC (Flag-Content) standard, used for node communication, is incredibly simple - unlike the other standards that make up Concord, it can be explained solely through the format template. Here it is:
+The FC (Flag-Content) standard, used for node communication, is incredibly simple. It consists of a purpose-identifying flag, a content section for arbitrary data, and a signature section where the combination of the above two (in that order) can be signed.
 ```
 {
     FLAG: <flag>,
-    CONTENT: <content>
+    CONT: <content>,
+    SIG: <sig(flag + content)> 
 }
 
 ```
-That's it. Flag is an identifier of message purpose, while content is a json object with relevant data. The main (currently, sole) implementation of FC is in facilitating HCLC merges.
