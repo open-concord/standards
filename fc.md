@@ -8,8 +8,6 @@ The FC (Flag-Content) standard, used for node communication, is incredibly simpl
     CONT: <content>
 }
 
-```
-
 ## Direct Channels - HCLC
 
 To establish a connection between exactly two nodes - the only purpose for which is HCLC merging - a simple DHM exchange is used. The exchange is as follows:
