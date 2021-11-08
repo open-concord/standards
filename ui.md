@@ -20,9 +20,9 @@ For an addition or query, the following features are needed:
 
 ```
 {
-    [string] "ch": target chain tripcode,
-    [string] "u": identity tripcode,
-    [string] "s": target server/DM tripcode
+    [string] "ch": <target chain tripcode>,
+    [string] "u": <identity tripcode>,
+    [string] "s": <target server/DM tripcode>
 }
 ```
 
@@ -33,21 +33,21 @@ In **addition** to these features, each type has separate arguments.
 Both additions and queries need a message type to add or retrieve, and hence:
 ```
 {
-    [char] "mt": message type ("s" for server, "p" for PM (DM), "d" for declaration)
+    [char] "mt": <message type> // ("s" for server, "p" for PM (DM), "d" for declaration)
 }
 ```
 For additions, we need content as well. 
 ```
 {
-    [string || object] "c": (json) content, in format described by the relevant of intraserver.txt or declaration.txt
+    [string || object] "c": [json] <content> // in format described by the relevant of intraserver.txt or declaration.txt
 }
 ```
 For queries, on the other hand, we need a range of messages to retrieve;
 ```
 {
-    [string] "l": <optional> hash of last block in record (to allow for UI message caching)
-    [int] "i": <conditional: l> amount of messages from 'l' (-1 signifies to end of chain)
-    [int[2]] "r": range of messages, backward from blockchain end - [start, end] (-1 signifies all)
+    [string] "l": <optional> // hash of last block in record (to allow for UI message caching)
+    [int] "i": <conditional: l> // amount of messages from 'l' (-1 signifies to end of chain)
+    [int[2]] "r": // range of messages, backward from blockchain end - [start, end] (-1 signifies all)
 }
 ```
 
@@ -55,7 +55,7 @@ We also need to discriminate by intraserver message type in queries:
 
 ```
 {
-    [char] "imt": "p" for plain messages, "m" for member changes, "r" for role changes, "s" for settings changes 
+    [char] "imt": "p" /** for plain messages*/ "m" /** for member changes */ "r" /** for role changes */ "s" /** for settings changes */
 }
 ```
 For identity addition, no data is needed if the user is to be generated. However, if the user is to be set, the following is required:
@@ -63,12 +63,12 @@ For identity addition, no data is needed if the user is to be generated. However
 ```
 {
     [object] "pub_keys": {
-        [string] "sig_pubk": DSA public key,
-        [string] "enc_pubk": RSA public key
+        [string] "sig_pubk": <DSA public key>,
+        [string] "enc_pubk": <RSA public key>
     },
     [object] "pri_keys": {
-        [string] "sig_prik": DSA private key,
-        [string] "enc_prik": RSA private key
+        [string] "sig_prik": <DSA private key>,
+        [string] "enc_prik": <RSA private key>
     }
 }
 ```
@@ -78,7 +78,7 @@ Identity modification just covers the addition of server AES keys, so it has the
 ```
 {
     [object] "serv_keys": {
-        Map: server tripcode -> server AES key
+        Map: {<server tripcode>: <server AES key>}
     }
 } 
 ```
@@ -90,11 +90,11 @@ AES encryption/decryption can be requested:
 ```
 {
     "ut": "e",
-    "aes_key": AES key, as generated with keygen,
-    "direction": 0 for encryption, 1 for decryption,
-    "plain": plaintext (if encrypting),
-    "nonce": nonce (if decrypting),
-    "cipher": ciphertext (if decrypting)
+    "aes_key": <AES key> // as generated with keygen
+    "direction": 0 /** for encryption */ 1 /** for decryption*/
+    "plain": plaintext // if encrypting
+    "nonce": nonce // if decrypting
+    "cipher": ciphertext // if decrypting
 }
 ```
 
@@ -103,7 +103,7 @@ Keygen of any type can also be requested:
 ```
 {
     "ut": "k",
-    "kt": key type (AES, DSA, or RSA)
+    "kt": <key type> // (AES || DSA || RSA)
 }
 ```
 
@@ -114,9 +114,9 @@ Meanwhile, a response to any request will be of the form below:
 
 ```
 {
-    [string] "err": code for error,
-    [char] "t": response type (same as request type),
-    [object] "c": type-dependent content
+    [string] "err": <code for error>,
+    [char] "t": <response type> // same as request type
+    [object] "c": <type-dependent content>
 }
 ```
 
@@ -125,7 +125,7 @@ For additions, user addition with defined keys, and user modification:
 ```
 {
     "c": {
-        [int] "success": 0 or 1
+        [int] "success": 0 || 1
     }
 }
 ```
@@ -135,8 +135,8 @@ For queries:
 ```
 {
     [object] "c": {
-        [object[]] "m": [array of decrypted message jsons],
-        [int[2]] "rr": real range retrieved - [start, end]
+        [object[]] "m": [<array of decrypted message jsons>],
+        [int[2]] "rr": [<start>, <end>] // <real range retrieved>
     }
 }
 ```
@@ -147,7 +147,7 @@ For user addition with undefined keys, the "c" field just contains the fields th
     [object] "c": {
         [object] "pub_keys": ...,
         [object] "pri_keys": ...,
-        [string] "u": generated user tripcode
+        [string] "u": <generated user tripcode>
     }
 }
 ```
@@ -161,9 +161,9 @@ For keygen:
 ```
 {
     "c": {
-        "pub": generated public key,
-        "pri": generated private key,
-        "kt": key type (from the request)
+        "pub": <generated public key>,
+        "pri": <generated private key>,
+        "kt": <key type> // from the request)
     }
 }
 ```
@@ -174,7 +174,7 @@ Some events will be sent as responses without a request, notifying the controlle
 ```
 {
     "c": {
-        "ch": new chain tripcode
+        "ch": <new chain tripcode>
     }
 }
 ```
@@ -183,8 +183,8 @@ Some events will be sent as responses without a request, notifying the controlle
 ```
 {
     "c": {
-        "ch": chain tripcode,
-        "bc": block count
+        "ch": <chain tripcode>,
+        "bc": <block count>
     }
 }
 ```
