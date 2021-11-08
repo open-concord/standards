@@ -23,5 +23,5 @@ To establish a connection between 3+ nodes, usually for pooling or the formation
 | Flag    | Direction  | Contents                                                                 | Prompted action         |
 |---------|------------|--------------------------------------------------------------------------|-------------------------|
 | NCHECK  | N<sub>n</sub>->N<sub>n+1</sub>   | List of involved nodes in the exchange in an arbitrary order (original propagator first) | If the recipient node completes the list, NKEY; otherwise continued NCHECK |
-| NKEY    | N<sub>n</sub>->N_<sub>n+1</sub> | Pub key integrating node n only                     | NKEY, MVKEY until cycle complete |
-| MVKEY   | N<sub>n</sub>->N_<sub>n+1</sub> | Pub key integrating nodes a...n, values of a and n  | If N<sub>n+1</sub> completes the cycle, first encrypted message; otherwise continued MVKEY |
+| NKEY    | N<sub>n</sub>->N<sub>n+1</sub> | Pub key integrating node n only                     | NKEY, MVKEY until cycle complete |
+| MVKEY   | N<sub>n</sub>->N<sub>n+1</sub> | Pub key integrating nodes a...n, values of a and n  | If N<sub>n+1</sub> completes the cycle, first encrypted message; otherwise continued MVKEY |
