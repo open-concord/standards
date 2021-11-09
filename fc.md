@@ -1,4 +1,6 @@
 # FC
+## Header
+Each message will be proceeded by a 4 digit byte size. This byte size if for the incoming message, and does not include the header itself. eg. Any given message's first 4 digits is the size of the message - those 4 digits
 
 ## Structure 
 
