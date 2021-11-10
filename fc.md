@@ -12,7 +12,7 @@ The FC (Flag-Content) standard, used for node communication, is incredibly simpl
 }
 
 ## ecDH(M) Context
-Concord assumes EC P-256, as per NIST recommendations for federal employee verification. However, if for some reason, you want to use another ecDH(M) context, it can be set before the `Key Exchange` FC. If you're the connecting node, it would be wise to send this information intially.
+Concord assumes EC P-256, as per NIST [recommendations](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-78-4.pdf) for federal employee verification. However, if for some reason, you want to use another ecDH(M) context, it can be set before the `Key Exchange` FC. If you're the connecting node, it would be wise to send this information intially.
 | Flag    | Direction  | Contents                                                                 | Prompted action         |
 |---------|------------|--------------------------------------------------------------------------|-------------------------|
 | CXT     |    C -> H  | Alias for requested ecDH(M) context                                      | Socket Connection       | 
