@@ -11,6 +11,12 @@ The FC (Flag-Content) standard, used for node communication, is incredibly simpl
     CONT: <content>
 }
 
+## ecDH(M) Context
+Concord assumes EC P-256, as per NIST recommendations for federal employee verification. However, if for some reason, you want to use another ecDH(M) context, it can be set before the `Key Exchange` FC. If you're the connecting node, it would be wise to send this information intially.
+| Flag    | Direction  | Contents                                                                 | Prompted action         |
+|---------|------------|--------------------------------------------------------------------------|-------------------------|
+| CXT     |    C -> H  | Alias for requested ecDH(M) context                                      | Socket Connection       | 
+    
 ## Direct Channels - HCLC
 
 To establish a connection between exactly two nodes - the only purpose for which is HCLC merging - a simple DHM exchange is used. The exchange is as follows:
