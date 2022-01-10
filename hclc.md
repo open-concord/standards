@@ -9,7 +9,9 @@ To begin an HCLC interaction, a node (referred to as the client) will initiate b
 The ready block prompts the server to begin sending blocks. Packages of blocks are sent in such a manner that, until no blocks remain, they'll continually prompt more packages. To lay out the protocol, it's first worth laying out the flags it supports:
 | Flag    | Direction  | Contents                                                                 | Next Action |
 |---------|------------|--------------------------------------------------------------------------|-----------------|
-| READY   | C->H       | Interaction details to establish connection                              | HBLOCKS         | 
+| READY   | C->H       | Interaction details to establish connection                              | HBLOCKS or HNOVEL |
+| HNOVEL  | H->C       | None                                                                     | CDUMP           |
+| CDUMP   | C->H       | All of C's blocks for the prompted chain                                 | CEND            |
 | HBLOCKS | H->C       | Block hashes of next server layers, requested from prev. layers          | CBLOCKS or CEND |
 | CBLOCKS | C->H       | Blocks not included in prompt layers, hashes not on client end from same | HBLOCKS         |
 | CEND    | C->H       | Same as CBLOCKS                                                          | HEND            |
