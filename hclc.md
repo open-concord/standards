@@ -1,6 +1,6 @@
 # HCLC
 
-The main purpose of node communication is to facilitate merging, for which the HCLC (Host-Client Layer Comparison) protocol is used. HCLC uses the FC format.
+The main purpose of node communication is to facilitate merging, for which the HCLC (Host-Client Layer Comparison) protocol is used. HCLC uses the [FC format](fc.md).
 
 To begin an HCLC interaction, a node (referred to as the client) will initiate by sending a `{FLAG: READY, CONTENT: {chain: <chain>, k: <k>}}` communication, where `<chain>` is the desired chain's tripcode, and `<k>` is the number of subsequent layers between client checks (more on what that means in a moment). The recipient will be referred to as the host.
 
