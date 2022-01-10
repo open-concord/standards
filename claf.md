@@ -1,4 +1,4 @@
-# CLAF
+# CLAF - Concord Limited Access Format
 
 ## Basic structure
 
