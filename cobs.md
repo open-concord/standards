@@ -1,8 +1,8 @@
-# COBS
+# COBS - Concord Opaque Block Standard
 
 ## Basic structure
 
-The atomic unit of the Concord blockhain is, of course, the block. In fact, Concord core stores the chain as a map of hashes to blocks. The information encoded in these blocks is described by the COBS (Concord Opaque Block Standard), described as a data structure below.
+The atomic unit of the Concord blockhain is, of course, the block. In fact, Concord core stores the chain as a map of hashes to blocks. The information encoded in these blocks is described by the data structure below.
 
 | Feature  | Type                     | Data                                             |
 |----------|--------------------------|--------------------------------------------------|

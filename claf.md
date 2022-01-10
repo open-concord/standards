@@ -1,10 +1,10 @@
-# CLAF
+# CLAF - Concord Limited Access Format
 
 ## Basic structure
 
 Once decrypted, Concord messages can be interpreted in any agreed-upon way.
 Included in the core framework is a standard for controlling specifically the
-access management elements of a chat server. Below, CLAF (the Concord Limited Access Format):
+access management elements of a chat server.
 
 Any message will have the following characteristics:
 ```

@@ -1,15 +1,16 @@
-# HCLC
-
-The main purpose of node communication is to facilitate merging, for which the HCLC (Host-Client Layer Comparison) protocol is used. HCLC uses the FC format.
+# HCLC - Host Client Layer Comparison
+The main purpose of node communication is to facilitate merging, for which the HCLC (Host-Client Layer Comparison) protocol is used. HCLC uses the [FC format](fc.md).
 
 To begin an HCLC interaction, a node (referred to as the client) will initiate by sending a `{FLAG: READY, CONTENT: {chain: <chain>, k: <k>}}` communication, where `<chain>` is the desired chain's tripcode, and `<k>` is the number of subsequent layers between client checks (more on what that means in a moment). The recipient will be referred to as the host.
 
 ----
 
 The ready block prompts the server to begin sending blocks. Packages of blocks are sent in such a manner that, until no blocks remain, they'll continually prompt more packages. To lay out the protocol, it's first worth laying out the flags it supports:
-| Flag    | Direction  | Contents                                                                 | Prompted action |
+| Flag    | Direction  | Contents                                                                 | Next Action |
 |---------|------------|--------------------------------------------------------------------------|-----------------|
-| READY   | C->H       | Interaction details to establish connection                              | HBLOCKS         | 
+| READY   | C->H       | Interaction details to establish connection                              | HBLOCKS or HNOVEL |
+| HNOVEL  | H->C       | None                                                                     | CDUMP           |
+| CDUMP   | C->H       | All of C's blocks for the prompted chain                                 | CEND            |
 | HBLOCKS | H->C       | Block hashes of next server layers, requested from prev. layers          | CBLOCKS or CEND |
 | CBLOCKS | C->H       | Blocks not included in prompt layers, hashes not on client end from same | HBLOCKS         |
 | CEND    | C->H       | Same as CBLOCKS                                                          | HEND            |
