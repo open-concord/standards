@@ -4,8 +4,8 @@ A user may declare their persistent self to the block.
 
 ***This is not required for participation in Concord messaging.***
 
-Doing so requires submitting an unencrypted block of this form:
-Declarant trip should be used as server trip.
+Doing so requires submitting an unencrypted block of this form (Declarant trip should be used as server trip):
+
 ```{
     "cont": "{
         "d": <declarant trip code (for validation)>,
