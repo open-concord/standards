@@ -1,11 +1,11 @@
-# FC
+# FC - Flag Content (Standard)
 ## Header
 Each message will be proceeded by a 4 digit byte size. This byte size is for the incoming message, and does not include the header itself. <br>
 Any given message's first 4 digits is the size of the message - `0025QWERTYUIOPASDFGHJKLZXCVBN`; 25 bytes stated in the header, 25 bytes of message.
 
 ## Structure 
 
-The FC (Flag-Content) standard, used for node communication, is incredibly simple. It consists only of a purpose-identifying flag and a content section for arbitrary data.
+FC is used for node communication, and is incredibly simple. It consists only of a purpose-identifying flag and a content section for arbitrary data.
 ```
 {
     FLAG: <flag>,
