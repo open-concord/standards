@@ -1,4 +1,4 @@
-# COBS
+# COBS - Concord Opaque Block Standard
 
 ## Basic structure
 
