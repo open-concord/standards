@@ -6,10 +6,12 @@ Any given message's first 4 digits is the size of the message - `0025QWERTYUIOPA
 ## Structure 
 
 The FC (Flag-Content) standard, used for node communication, is incredibly simple. It consists only of a purpose-identifying flag and a content section for arbitrary data.
+```
 {
     FLAG: <flag>,
     CONT: <content>
 }
+```
 
 ## ecDH(M) Context
 Concord assumes EC P-256, as per NIST [recommendations](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-78-4.pdf) for federal employee verification. However, if for some reason, you want to use another ecDH(M) context, it can be set before the `Key Exchange` FC. If you're the connecting node, it would be wise to send this information intially.
