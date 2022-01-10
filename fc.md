@@ -20,7 +20,7 @@ Concord assumes EC P-256, as per NIST [recommendations](https://nvlpubs.nist.gov
 | CTX-E     |    C -> H  | Alias for requested ecDH(M) context                                      | CTX-R       |
 | CTX-R     |    H -> C | Confirmation that host has received context (no content) | Channel establishment |  
     
-## Direct Channels - HCLC
+## Direct Channels - [HCLC](hclc.md)
 
 To establish a connection between exactly two nodes - the only purpose for which is HCLC merging - a simple DHM exchange is used. The exchange is as follows:
 | Flag    | Direction  | Contents                                                                 | Next Action         |
