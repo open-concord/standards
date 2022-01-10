@@ -18,16 +18,16 @@ Concord assumes EC P-256, as per NIST [recommendations](https://nvlpubs.nist.gov
 | CTX-E     |    C -> H  | Alias for requested ecDH(M) context                                      | CTX-R       |
 | CTX-R     |    H -> C | Confirmation that host has received context (no content) | Channel establishment |  
     
-## Direct Channels - HCLC
+## Direct Channels - used for HCLC
 
-To establish a connection between exactly two nodes - the only purpose for which is HCLC merging - a simple DHM exchange is used. The exchange is as follows:
+To establish a connection between exactly two nodes - the only current purpose for which is HCLC merging - a simple DHM exchange is used. The exchange is as follows:
 | Flag    | Direction  | Contents                                                                 | Prompted action         |
 |---------|------------|--------------------------------------------------------------------------|-------------------------|
 | KE      | Bilateral  | Newly Generated p2p Public Key                                           | Socket Connection       | 
 
 By the standard DHM algorithm, a shared AES key is generated independently by both parties, which is then used to encrypt the remainder of the exchange.
 
-## Circular Channels - Pooling
+## Circular Channels - used for mining pools and verification circles
 
 To establish a connection between 3+ nodes, usually for pooling or the formation of a verification circle, multi-party DHM is applied, with the procedure below being used:
 | Flag    | Direction  | Contents                                                                 | Prompted action         |
