@@ -1,3 +1,5 @@
+[Direct Reference](#dref)
+
 The core application connects to a configurable local port for a controller connection.
 Usually, this controller will take the form of a UI application running a socket server.
 
@@ -200,9 +202,12 @@ Some events will be sent as responses without a request, notifying the controlle
 
 
 ---
-### Direct Reference
+### <a name="dref">Direct Reference</a>
 
-<a name="add">**Addition**</a>
+<details>
+    <summary><b><a name="add">Addition</a></b></summary>
+<br>
+
 <table>
 <tr>
 <td> Input </td>
@@ -245,3 +250,4 @@ Some events will be sent as responses without a request, notifying the controlle
 </td>
 </tr>
 </table>
+</details>
