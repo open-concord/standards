@@ -1,5 +1,7 @@
 [Direct Reference](#dref)
+<hr>
 
+### Detailed Explanation
 The core application connects to a configurable local port for a controller connection.
 Usually, this controller will take the form of a UI application running a socket server.
 
