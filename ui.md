@@ -1,7 +1,7 @@
-[Direct Reference](#dref)
+### [Direct Reference](#dref)
 <hr>
 
-### Detailed Explanation
+### <a name="dex">Detailed Explanation</a>
 The core application connects to a configurable local port for a controller connection.
 Usually, this controller will take the form of a UI application running a socket server.
 
@@ -219,7 +219,7 @@ Some events will be sent as responses without a request, notifying the controlle
     
 ```
 {
-    [char] "t": "a", // request type
+    [char] "t": 'a',
     [string] "ch": <target chain tripcode>,
     [string] "u": <identity tripcode>,
     [string] "s": <target->server/DM tripcode>,
@@ -242,7 +242,7 @@ Some events will be sent as responses without a request, notifying the controlle
 ```
 {
     [string] "err": code for error,
-    [char] "t": response type (same as request type),
+    [char] "t": <response type>, // same as request type
     [object] "c": {
         [int] "success": <0 or 1> // treat as a bool
     }
@@ -253,3 +253,216 @@ Some events will be sent as responses without a request, notifying the controlle
 </tr>
 </table>
 </details>
+
+<details>
+    <summary><b><a name="query">Queries</a></b></summary>
+<br>
+
+<table>
+<tr>
+<td> Input </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+    [char] "t": 'q',
+    [string] "ch": <target chain tripcode>,
+    [string] "u": <identity tripcode>,
+    [string] "s": <target->server/DM tripcode>,
+    [char] "mt": <message type>, // "s" for server, "p" for PM (DM), "d" for declaration
+    [string] "l": <optional>, // hash of last block in record (to allow for UI message caching)
+    [int] "i": <conditional: l>, // amount of messages from 'l' (-1 signifies to end of chain)
+    [int[2]] "r": <index0, index1>, // range of messages, backward from blockchain end - [start, end] (-1 signifies all)
+    [char] "imt": "p" /** for plain messages*/ "m" /** for member changes */ "r" /** for role changes */ "s" /** for settings changes */
+}
+```
+    
+</td>
+</tr>
+</table>
+</details>
+
+<details>
+    <summary><b><a name="id_add">Identity Addition</a></b></summary>
+<br>
+
+<table>
+<tr>
+<td> Input (User Generation) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 'u' // literally nothing besides the type
+}
+```
+    
+</td>
+</tr>
+</table>
+	<table>
+<tr>
+<td> Input (User Set) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": "a",
+	[object] "pub_keys": {
+		[string] "sig_pubk": <DSA public key>,
+		[string] "enc_pubk": <RSA public key>
+	},
+	[object] "pri_keys": {
+		[string] "sig_prik": <DSA private key>,
+		[string] "enc_prik": <RSA private key>
+	}
+}
+```
+    
+</td>
+</tr>
+</table>
+</details>
+
+<details>
+    <summary><b><a name="id_mod">Identity Modification</a></b></summary>
+<br>
+
+<table>
+<tr>
+<td> Input </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 'm',
+	[map<string, string>] "serv_keys": {
+		<server tripcode>: <server AES key>
+	}
+}
+```
+    
+</td>
+</tr>
+</table>
+</details>
+	
+<details>
+    <summary><b><a name="misc">Misc. Utility</a></b></summary>
+<br>
+
+<details>
+	<summary><b>AES Encryption</b></summary>
+<table>
+<tr>
+<td> Input (AES Enc) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 't',
+	[char] "ut": 'e',
+	[string] "aes_key": <AES Key>,
+	[int] "direction": 0,
+	[string] "plain": <plaintext>
+}
+```
+    
+</td>
+</tr>
+</table>
+</details>
+<details>
+<summary><b>AES Decryption</b></summary>
+<table>
+<tr>
+<td> Input (AES Dec) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 't',
+	[char] "ut": 'e',
+	[string] "aes_key": <AES Key>,
+	[int] "direction": 1,
+	[string] "nonce": <nonce>,
+	[string] "cipher": <ciphertext>
+}
+```
+    
+</td>
+</tr>
+</table>
+</details>
+<details>
+<summary><b>Key Generation</b></summary>
+<table>
+<tr>
+<td> Input (AES) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 't',
+	[char] "ut": 'k',
+	[string] "kt": "AES"
+}
+```
+    
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td> Input (DSA) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 't',
+	[char] "ut": 'k',
+	[string] "kt": "DSA"
+}
+```
+    
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td> Input (RSA) </td>
+</tr>
+<tr>
+<td>
+    
+```
+{
+	[char] "t": 't',
+	[char] "ut": 'k',
+	[string] "kt": "RSA"
+}
+```
+    
+</td>
+</tr>
+</table>
+
+</details>
+	
+[Back To Top](#dex)
