@@ -21,7 +21,7 @@ This is used to identify the server on the greater Concord chain in such a way t
 
 ## Public Servers
 
-Public servers are distinct blockchains hosted on a Concord chain, so they're uniquely defined by their key acceptance protocol - a transparent C++ function encoded within them. Their tripcodes are formed from this function, alongside a unique server number to allow clones of a particular function to be distinct without superfluous code changes to be necessary. Overall, the tripcode is expressible this way:
+Public servers are distinct blockchains hosted on a Concord chain, so they're uniquely defined by their key acceptance protocol - a transparent Haskell function encoded within them. Their tripcodes are formed from this function, alongside a unique server number to allow clones of a particular function to be distinct without superfluous code changes to be necessary. Overall, the tripcode is expressible this way:
 ```
 SHA256-hash(b64(server number)+acceptance protocol code)
 ```
