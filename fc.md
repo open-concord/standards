@@ -19,7 +19,16 @@ Concord assumes EC P-256, as per NIST [recommendations](https://nvlpubs.nist.gov
 |---------|------------|--------------------------------------------------------------------------|-------------------------|
 | CTX-E     |    C -> H  | Alias for requested ecDH(M) context                                      | CTX-R       |
 | CTX-R     |    H -> C | Confirmation that host has received context (no content) | Channel establishment |  
-    
+
+
+## Suspend & Heartbeat
+Sometimes during an extended or semi-permanent connection, nothing happens. The suspend and hearbeat actions enable this without wasting system resources on silently dropped connections. The direction is intially bilateral, but after the `SUSPEND` flag is send, the direction is between `Sender` and `Receiver`.
+| Flag    | Direction | Contents                                                                | Next Action                 |
+|---------|-----------|-------------------------------------------------------------------------|-----------------------------|
+| SUSPEND |    S -> R | Timeout interval after last heartbeat, as n milliseconds                | (R) Wait n milliseconds     |
+| HBEAT   |    S -> R | Nothing                                                                 | (R) Restart timeout         |
+| \<any\> | Bilateral | \<appropriate content\>                                                 | \<appropriate next action\> |  
+
 ## Direct Channels - [HCLC](hclc.md)
 
 To establish a connection between exactly two nodes - the only purpose for which is HCLC merging - a simple DHM exchange is used. The exchange is as follows:
