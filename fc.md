@@ -22,7 +22,7 @@ Concord assumes EC P-256, as per NIST [recommendations](https://nvlpubs.nist.gov
 
 
 ## Suspend & Heartbeat
-Sometimes during an extended or semi-permanent connection, nothing happens. The suspend and hearbeat actions enable this without wasting system resources on silently dropped connections. The direction is intially bilateral, but after the `SUSPEND` flag is send, the direction is between `Sender` and `Receiver`.
+Sometimes during an extended or semi-permanent connection, nothing happens. The suspend and hearbeat actions enable this without wasting system resources on silently dropped connections. The direction is intially bilateral, but after the `SUSPEND` flag is sent, the direction is between `Sender` and `Receiver`. Either party can close the connection, but `Sender` **should** be the only party to send anything else.
 | Flag    | Direction | Contents                                                                | Next Action                 |
 |---------|-----------|-------------------------------------------------------------------------|-----------------------------|
 | SUSPEND |    S -> R | Timeout interval after last heartbeat, as n milliseconds                | (R) Wait n milliseconds     |
