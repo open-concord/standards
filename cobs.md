@@ -9,7 +9,7 @@ The atomic unit of the Concord blockhain is, of course, the block. In fact, Conc
 | time     | unsigned long long int   | Time of block creation                           |
 | nonce    | string (24 chars)        | Random content added to meet POW requisite       |
 | s_trip   | string (24 chars)        | Tripcode for relevant server                     |
-| c_trip   | string (24 chars)        | Tripcode for user responsible for POW (optional) |
+| c_trip (optional)   | string (24 chars)        | Tripcode for user responsible for POW |
 | cont     | string                   | Content of the block                             |
 | hash     | string                   | Hash generated from all features except c_trip   |
 | p_hashes | unordered set of strings | Block hashes used to generate this block         |
